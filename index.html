@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Amazon.in — Online Shopping Site</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Override Amazon color theme -->
+  <style>
+    :root {
+      --clr-primary:      #131921;  /* Amazon dark navy */
+      --clr-primary-dark: #0a1017;
+      --clr-accent:       #FF9900;  /* Amazon orange */
+      --clr-accent-teal:  #FF9900;
+      --clr-bg:           #EAEDED;  /* Amazon light grey bg */
+      --clr-surface:      #FFFFFF;
+      --clr-border:       #DDD;
+      --clr-text:         #0F1111;
+      --clr-text-muted:   #565959;
+    }
+
+    /* ── Amazon-style logo ── */
+    .logo {
+      font-family: Arial, sans-serif;
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -1px;
+    }
+
+    .logo-mark {
+      color: #FF9900;
+    }
+
+    /* Amazon orange arrow under logo */
+    .logo::after {
+      content: '↗';
+      color: #FF9900;
+      font-size: 0.7rem;
+      vertical-align: super;
+      margin-left: 1px;
+    }
+
+    /* ── Nav overrides ── */
+    .main-nav {
+      background: #131921;
+    }
+
+    .search-btn {
+      background: #FF9900;
+    }
+
+    .search-btn:hover {
+      background: #e88a00;
+    }
+
+    .category-nav {
+      background: #232F3E;
+      border-top: none;
+    }
+
+    .category-links li a:hover,
+    .hamburger-menu:hover {
+      outline: 1px solid #fff;
+      background: transparent;
+    }
+
+    /* ── Hero: Amazon-style blue banner ── */
+    .hero {
+      background: #004B8D;
+      background-image:
+        linear-gradient(180deg, #004B8D 0%, #001F3F 100%);
+      padding: 0;
+      min-height: 340px;
+    }
+
+    .hero-inner {
+      display: block;
+      padding: 0;
+    }
+
+    /* Wide banner image simulation */
+    .hero-banner-img {
+      width: 100%;
+      height: 340px;
+      background: linear-gradient(135deg, #004B8D 0%, #001F3F 60%, #131921 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-banner-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 70% 50%, rgba(255,153,0,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(0,100,200,0.2) 0%, transparent 50%);
+    }
+
+    .hero-banner-text {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      color: #fff;
+      padding: 2rem;
+    }
+
+    .hero-banner-text h1 {
+      font-family: Arial, sans-serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .hero-banner-text p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-ctas .btn-primary {
+      background: #FF9900;
+      color: #111;
+      font-weight: 700;
+      border-radius: 4px;
+    }
+
+    .hero-ctas .btn-primary:hover {
+      background: #e88a00;
+    }
+
+    .hero-ctas .btn-ghost {
+      border-color: #fff;
+      color: #fff;
+    }
+
+    /* Hide the floating hero cards (not Amazon style) */
+    .hero-visual,
+    .hero-eyebrow,
+    .hero-sub,
+    .hero-scroll-hint {
+      display: none;
+    }
+
+    /* ── Section titles Amazon style ── */
+    .section-title {
+      font-family: Arial, sans-serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #0F1111;
+    }
+
+    .accent {
+      color: #131921;
+    }
+
+    /* ── Deal badge orange ── */
+    .deal-badge {
+      background: #CC0C39;  /* Amazon red deal badge */
+    }
+
+    /* ── Filter tabs Amazon style ── */
+    .filter-tab.active {
+      background: #FF9900;
+      border-color: #FF9900;
+      color: #111;
+    }
+
+    .filter-tab:hover {
+      border-color: #FF9900;
+      color: #FF9900;
+    }
+
+    /* ── Buttons Amazon style ── */
+    .btn-primary {
+      background: #FF9900;
+      color: #111;
+      border-radius: 20px;
+      border: 1px solid #FF9900;
+    }
+
+    .btn-primary:hover {
+      background: #e88a00;
+    }
+
+    .btn-sm {
+      background: #FF9900;
+      color: #111;
+      border-radius: 20px;
+    }
+
+    .btn-sm:hover {
+      background: #e88a00;
+    }
+
+    /* ── Product discount green ── */
+    .prod-discount {
+      color: #CC0C39;
+      background: #FFE4E8;
+    }
+
+    /* ── Product brand Amazon style ── */
+    .prod-brand {
+      color: #007185;
+    }
+
+    /* ── Stars Amazon yellow ── */
+    .stars {
+      color: #FF9900;
+    }
+
+    /* ── USP strip ── */
+    .usp-strip {
+      background: #fff;
+    }
+
+    /* ── Newsletter Amazon blue ── */
+    .newsletter {
+      background: linear-gradient(180deg, #232F3E 0%, #131921 100%);
+    }
+
+    /* ── Footer Amazon dark ── */
+    .site-footer {
+      background: #232F3E;
+    }
+
+    .footer-bottom {
+      background: #131921;
+      border-top: none;
+      padding: 1.5rem 2rem;
+    }
+
+    /* ── Toast ── */
+    .toast {
+      border-color: #FF9900;
+    }
+
+    /* ── Cart badge ── */
+    .cart-badge {
+      background: #FF9900;
+      color: #111;
+      font-weight: 900;
+    }
+
+    /* ── See all link ── */
+    .see-all {
+      color: #007185;
+    }
+
+    .see-all:hover {
+      color: #c45500;
+      text-decoration: underline;
+    }
+
+    /* ── Deal progress bar ── */
+    .deal-fill {
+      background: #CC0C39;
+    }
+
+    .deal-price {
+      color: #CC0C39;
+    }
+
+    /* ── Category tiles ── */
+    .cat-tile-content h3 {
+      font-family: Arial, sans-serif;
+    }
+
+    /* ── Amazon "Back to top" bar ── */
+    .back-to-top {
+      background: #37475A;
+      text-align: center;
+      padding: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .back-to-top:hover {
+      background: #485769;
+    }
+
+    .back-to-top a {
+      color: #fff;
+      font-size: 0.85rem;
+      font-family: Arial, sans-serif;
+      text-decoration: none;
+      display: block;
+    }
+
+    /* ── Footer links Amazon style ── */
+    .footer-heading {
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .footer-col ul a:hover {
+      text-decoration: underline;
+      color: #fff;
+    }
+
+    /* ── Amazon bottom footer links ── */
+    .footer-legal-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      padding: 1rem 2rem 0.5rem;
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    .footer-legal-links a {
+      color: #DDD;
+      font-size: 0.75rem;
+      font-family: Arial, sans-serif;
+    }
+
+    .footer-legal-links a:hover {
+      text-decoration: underline;
+      color: #fff;
+    }
+
+    /* ── Responsive fix ── */
+    @media (max-width: 640px) {
+      .hero-banner-img {
+        height: 220px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- =============================================
+       TOP UTILITY BAR — Amazon style
+  =============================================== -->
+  <div class="utility-bar">
+    <div class="utility-inner">
+      <span class="utility-left">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/>
+        </svg>
+        Deliver to <strong>India</strong>
+      </span>
+      <nav class="utility-right" aria-label="Utility navigation">
+        <a href="#">Help</a>
+        <a href="#">Sell on Amazon</a>
+        <a href="#">Sign In</a>
+      </nav>
+    </div>
+  </div>
+
+  <!-- =============================================
+       MAIN NAVIGATION — Amazon style
+  =============================================== -->
+  <header class="main-nav" role="banner">
+    <div class="nav-inner">
+
+      <!-- Amazon Logo -->
+      <a href="#" class="logo" aria-label="Amazon home">
+        <span class="logo-mark">a</span>mazon<span style="color:#FF9900;font-size:0.55rem;vertical-align:super;">.in</span>
+      </a>
+
+      <!-- Search Bar -->
+      <div class="search-bar" role="search">
+        <select class="search-category" aria-label="Search category">
+          <option>All</option>
+          <option>Electronics</option>
+          <option>Fashion</option>
+          <option>Home & Kitchen</option>
+          <option>Books</option>
+          <option>Toys</option>
+          <option>Sports</option>
+          <option>Beauty</option>
+          <option>Grocery</option>
+        </select>
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search Amazon.in"
+          aria-label="Search products"
+        />
+        <button class="search-btn" aria-label="Submit search">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
+              stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Right Nav Icons -->
+      <div class="nav-actions">
+        <!-- Language -->
+        <a href="#" class="nav-action-btn" aria-label="Language">
+          <svg viewBox="0 0 24 24" aria-hidden="true" width="22" height="22">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/>
+            <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10A15.3 15.3 0 0 1 8 12a15.3 15.3 0 0 1 4-10z" stroke="currentColor" stroke-width="2" fill="none"/>
+          </svg>
+          <span>EN</span>
+        </a>
+        <!-- Account -->
+        <a href="#" class="nav-action-btn" aria-label="Account">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"
+              fill="currentColor"/>
+          </svg>
+          <span>Account</span>
+        </a>
+        <!-- Returns & Orders -->
+        <a href="#" class="nav-action-btn" aria-label="Returns and Orders">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2"
+              stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>
+          </svg>
+          <span>Returns</span>
+        </a>
+        <!-- Cart -->
+        <a href="#" class="nav-action-btn cart-btn" aria-label="Cart">
+          <div class="cart-icon-wrap">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"
+                stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span class="cart-badge" aria-label="3 items in cart">3</span>
+          </div>
+          <span>Cart</span>
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Secondary Nav: Category links -->
+    <nav class="category-nav" aria-label="Product categories">
+      <div class="category-nav-inner">
+        <button class="hamburger-menu" id="hamburgerBtn" aria-expanded="false" aria-controls="categoryLinks">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          All
+        </button>
+        <ul class="category-links" id="categoryLinks" role="list">
+          <li><a href="#">Best Sellers</a></li>
+          <li><a href="#">Today's Deals</a></li>
+          <li><a href="#">Mobiles</a></li>
+          <li><a href="#">Electronics</a></li>
+          <li><a href="#">Fashion</a></li>
+          <li><a href="#">Prime</a></li>
+          <li><a href="#">Home & Kitchen</a></li>
+          <li><a href="#">Customer Service</a></li>
+          <li><a href="#">New Releases</a></li>
+          <li><a href="#">Books</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- =============================================
+       HERO BANNER — Amazon style full-width
+  =============================================== -->
+  <section class="hero" aria-label="Featured promotion">
+    <div class="hero-inner">
+      <div class="hero-banner-img">
+        <div class="hero-banner-text">
+          <h1>Great Indian Festival Sale</h1>
+          <p>Up to 80% off on Electronics, Fashion, Home & more</p>
+          <div class="hero-ctas">
+            <a href="#products" class="btn btn-primary">Shop Now</a>
+            <a href="#deals" class="btn btn-ghost">See All Deals</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       DEALS STRIP — Today's Deals
+  =============================================== -->
+  <section class="deals-strip" id="deals" aria-label="Today's deals">
+    <div class="section-header">
+      <h2 class="section-title">Today's <span class="accent">Deals</span></h2>
+      <a href="#" class="see-all">See all deals →</a>
+    </div>
+    <div class="deals-scroller" role="list">
+
+      <article class="deal-card" role="listitem">
+        <div class="deal-badge">-42%</div>
+        <div class="deal-thumb deal-thumb--indigo"></div>
+        <div class="deal-info">
+          <p class="deal-name">boAt Airdopes 141 Bluetooth Earbuds</p>
+          <p class="deal-price">₹1,299 <s class="deal-old">₹2,249</s></p>
+          <div class="deal-progress" role="progressbar" aria-valuenow="68" aria-valuemin="0" aria-valuemax="100">
+            <div class="deal-fill" style="width:68%"></div>
+          </div>
+          <p class="deal-stock">68% claimed</p>
+        </div>
+        <button class="btn btn-sm">Add to Cart</button>
+      </article>
+
+      <article class="deal-card" role="listitem">
+        <div class="deal-badge">-30%</div>
+        <div class="deal-thumb deal-thumb--amber"></div>
+        <div class="deal-info">
+          <p class="deal-name">Prestige Iris 750W Mixer Grinder</p>
+          <p class="deal-price">₹1,849 <s class="deal-old">₹2,650</s></p>
+          <div class="deal-progress" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">
+            <div class="deal-fill" style="width:45%"></div>
+          </div>
+          <p class="deal-stock">45% claimed</p>
+        </div>
+        <button class="btn btn-sm">Add to Cart</button>
+      </article>
+
+      <article class="deal-card" role="listitem">
+        <div class="deal-badge">-55%</div>
+        <div class="deal-thumb deal-thumb--rose"></div>
+        <div class="deal-info">
+          <p class="deal-name">Lakme Absolute Skin Natural Mousse</p>
+          <p class="deal-price">₹299 <s class="deal-old">₹665</s></p>
+          <div class="deal-progress" role="progressbar" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100">
+            <div class="deal-fill" style="width:89%"></div>
+          </div>
+          <p class="deal-stock">89% claimed</p>
+        </div>
+        <button class="btn btn-sm">Add to Cart</button>
+      </article>
+
+      <article class="deal-card" role="listitem">
+        <div class="deal-badge">-20%</div>
+        <div class="deal-thumb deal-thumb--mint"></div>
+        <div class="deal-info">
+          <p class="deal-name">Lifelong Fit Pro Exercise Cycle</p>
+          <p class="deal-price">₹6,999 <s class="deal-old">₹8,749</s></p>
+          <div class="deal-progress" role="progressbar" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100">
+            <div class="deal-fill" style="width:31%"></div>
+          </div>
+          <p class="deal-stock">31% claimed</p>
+        </div>
+        <button class="btn btn-sm">Add to Cart</button>
+      </article>
+
+      <article class="deal-card" role="listitem">
+        <div class="deal-badge">-35%</div>
+        <div class="deal-thumb deal-thumb--sky"></div>
+        <div class="deal-info">
+          <p class="deal-name">Milton Thermosteel Flip Lid Flask</p>
+          <p class="deal-price">₹649 <s class="deal-old">₹999</s></p>
+          <div class="deal-progress" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100">
+            <div class="deal-fill" style="width:57%"></div>
+          </div>
+          <p class="deal-stock">57% claimed</p>
+        </div>
+        <button class="btn btn-sm">Add to Cart</button>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       CATEGORY SHOWCASE
+  =============================================== -->
+  <section class="category-showcase" aria-label="Shop by category">
+    <div class="section-header">
+      <h2 class="section-title">Shop by <span class="accent">Category</span></h2>
+    </div>
+    <div class="cat-grid">
+
+      <a href="#" class="cat-tile cat-tile--tech" aria-label="Shop Electronics">
+        <div class="cat-tile-bg"></div>
+        <div class="cat-tile-content">
+          <h3>Electronics</h3>
+          <p>Mobiles, Laptops & more</p>
+          <span class="cat-cta">Shop Now →</span>
+        </div>
+      </a>
+
+      <a href="#" class="cat-tile cat-tile--fashion" aria-label="Shop Fashion">
+        <div class="cat-tile-bg"></div>
+        <div class="cat-tile-content">
+          <h3>Fashion</h3>
+          <p>Clothing, Shoes & Accessories</p>
+          <span class="cat-cta">Shop Now →</span>
+        </div>
+      </a>
+
+      <a href="#" class="cat-tile cat-tile--home" aria-label="Shop Home & Kitchen">
+        <div class="cat-tile-bg"></div>
+        <div class="cat-tile-content">
+          <h3>Home & Kitchen</h3>
+          <p>Furniture, Appliances & more</p>
+          <span class="cat-cta">Shop Now →</span>
+        </div>
+      </a>
+
+      <a href="#" class="cat-tile cat-tile--beauty" aria-label="Shop Beauty">
+        <div class="cat-tile-bg"></div>
+        <div class="cat-tile-content">
+          <h3>Beauty</h3>
+          <p>Skincare, Makeup & more</p>
+          <span class="cat-cta">Shop Now →</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       FEATURED PRODUCTS
+  =============================================== -->
+  <section class="products" id="products" aria-label="Featured products">
+    <div class="section-header">
+      <h2 class="section-title">Featured <span class="accent">Products</span></h2>
+      <a href="#" class="see-all">View all →</a>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-tabs" role="tablist" aria-label="Product filters">
+      <button class="filter-tab active" role="tab" aria-selected="true" data-filter="all">All</button>
+      <button class="filter-tab" role="tab" aria-selected="false" data-filter="electronics">Electronics</button>
+      <button class="filter-tab" role="tab" aria-selected="false" data-filter="fashion">Fashion</button>
+      <button class="filter-tab" role="tab" aria-selected="false" data-filter="home">Home</button>
+      <button class="filter-tab" role="tab" aria-selected="false" data-filter="beauty">Beauty</button>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="product-grid" id="productGrid">
+
+      <article class="product-card" data-category="electronics">
+        <button class="wishlist-toggle" aria-label="Add to wishlist">♡</button>
+        <div class="prod-thumb prod-thumb--violet"></div>
+        <div class="prod-body">
+          <p class="prod-brand">Samsung</p>
+          <h3 class="prod-name">Samsung Galaxy Buds2 Pro True Wireless</h3>
+          <div class="prod-rating" aria-label="4.5 out of 5 stars">
+            <span class="stars">★★★★½</span>
+            <span class="review-count">(12,284)</span>
+          </div>
+          <div class="prod-price-row">
+            <span class="prod-price">₹9,999</span>
+            <span class="prod-old">₹17,999</span>
+            <span class="prod-discount">-44%</span>
+          </div>
+          <button class="btn btn-primary btn-block add-to-cart-btn">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="fashion">
+        <button class="wishlist-toggle" aria-label="Add to wishlist">♡</button>
+        <div class="prod-thumb prod-thumb--peach"></div>
+        <div class="prod-body">
+          <p class="prod-brand">Allen Solly</p>
+          <h3 class="prod-name">Men's Slim Fit Casual Shirt</h3>
+          <div class="prod-rating" aria-label="4 out of 5 stars">
+            <span class="stars">★★★★☆</span>
+            <span class="review-count">(8,760)</span>
+          </div>
+          <div class="prod-price-row">
+            <span class="prod-price">₹699</span>
+            <span class="prod-old">₹1,299</span>
+            <span class="prod-discount">-46%</span>
+          </div>
+          <button class="btn btn-primary btn-block add-to-cart-btn">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="home">
+        <button class="wishlist-toggle" aria-label="Add to wishlist">♡</button>
+        <div class="prod-thumb prod-thumb--sage"></div>
+        <div class="prod-body">
+          <p class="prod-brand">Philips</p>
+          <h3 class="prod-name">Philips HD2582/00 Sandwich Maker</h3>
+          <div class="prod-rating" aria-label="5 out of 5 stars">
+            <span class="stars">★★★★★</span>
+            <span class="review-count">(31,020)</span>
+          </div>
+          <div class="prod-price-row">
+            <span class="prod-price">₹1,799</span>
+            <span class="prod-old">₹2,795</span>
+            <span class="prod-discount">-36%</span>
+          </div>
+          <button class="btn btn-primary btn-block add-to-cart-btn">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="beauty">
+        <button class="wishlist-toggle" aria-label="Add to wishlist">♡</button>
+        <div class="prod-thumb prod-thumb--blush"></div>
+        <div class="prod-body">
+          <p class="prod-brand">Mamaearth</p>
+          <h3 class="prod-name">Mamaearth Ubtan Face Wash 200ml</h3>
+          <div class="prod-rating" aria-label="4.7 out of 5 stars">
+            <span class="stars">★★★★★</span>
+            <span class="review-count">(54,180)</span>
+          </div>
+          <div class="prod-price-row">
+            <span class="prod-price">₹249</span>
+            <span class="prod-old">₹399</span>
+            <span class="prod-discount">-38%</span>
+          </div>
+          <button class="btn btn-primary btn-block add-to-cart-btn">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="electronics">
+        <button class="wishlist-toggle" aria-label="Add to wishlist">♡</button>
+        <div class="prod-thumb prod-thumb--electric"></div>
+        <div class="prod-body">
+          <p class="prod-brand">Redmi</p>
+          <h3 class="prod-name">Redmi 13C 5G (Startrail Black, 4GB RAM)</h3>
+          <div class="prod-rating" aria-label="4.3 out of 5 stars">
+            <span class="stars">★★★★☆</span>
+            <span class="review-count">(20,570)</span>
+          </div>
+          <div class="prod-price-row">
+            <span class="prod-price">₹10,499</span>
+            <span class="prod-old">₹12,999</span>
+            <span class="prod-discount">-19%</span>
+          </div>
+          <button class="btn btn-primary btn-block add-to-cart-btn">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="home">
+        <button class="wishlist-toggle" aria-label="Add to wishlist">♡</button>
+        <div class="prod-thumb prod-thumb--terracotta"></div>
+        <div class="prod-body">
+          <p class="prod-brand">Solimo</p>
+          <h3 class="prod-name">Amazon Solimo 2-Ply Toilet Paper Rolls</h3>
+          <div class="prod-rating" aria-label="4.6 out of 5 stars">
+            <span class="stars">★★★★★</span>
+            <span class="review-count">(9,880)</span>
+          </div>
+          <div class="prod-price-row">
+            <span class="prod-price">₹499</span>
+            <span class="prod-old">₹699</span>
+            <span class="prod-discount">-29%</span>
+          </div>
+          <button class="btn btn-primary btn-block add-to-cart-btn">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="fashion">
+        <button class="wishlist-toggle" aria-label="Add to wishlist">♡</button>
+        <div class="prod-thumb prod-thumb--cobalt"></div>
+        <div class="prod-body">
+          <p class="prod-brand">Puma</p>
+          <h3 class="prod-name">Puma Men's Flyer Runner Running Shoes</h3>
+          <div class="prod-rating" aria-label="4.4 out of 5 stars">
+            <span class="stars">★★★★☆</span>
+            <span class="review-count">(16,700)</span>
+          </div>
+          <div class="prod-price-row">
+            <span class="prod-price">₹2,099</span>
+            <span class="prod-old">₹3,999</span>
+            <span class="prod-discount">-48%</span>
+          </div>
+          <button class="btn btn-primary btn-block add-to-cart-btn">Add to Cart</button>
+        </div>
+      </article>
+
+      <article class="product-card" data-category="beauty">
+        <button class="wishlist-toggle" aria-label="Add to wishlist">♡</button>
+        <div class="prod-thumb prod-thumb--lavender"></div>
+        <div class="prod-body">
+          <p class="prod-brand">WOW Skin Science</p>
+          <h3 class="prod-name">WOW Apple Cider Vinegar Shampoo 300ml</h3>
+          <div class="prod-rating" aria-label="4.8 out of 5 stars">
+            <span class="stars">★★★★★</span>
+            <span class="review-count">(23,410)</span>
+          </div>
+          <div class="prod-price-row">
+            <span class="prod-price">₹299</span>
+            <span class="prod-old">₹599</span>
+            <span class="prod-discount">-50%</span>
+          </div>
+          <button class="btn btn-primary btn-block add-to-cart-btn">Add to Cart</button>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       USP / TRUST STRIP
+  =============================================== -->
+  <section class="usp-strip" aria-label="Our promises">
+    <ul class="usp-list" role="list">
+      <li class="usp-item">
+        <div class="usp-icon" aria-hidden="true">🚀</div>
+        <h4>FREE Delivery</h4>
+        <p>Free delivery on orders above ₹499. Same-day delivery available.</p>
+      </li>
+      <li class="usp-item">
+        <div class="usp-icon" aria-hidden="true">🔒</div>
+        <h4>Safe Payments</h4>
+        <p>UPI, Cards, Net Banking, Amazon Pay — 100% secure.</p>
+      </li>
+      <li class="usp-item">
+        <div class="usp-icon" aria-hidden="true">↩️</div>
+        <h4>Easy Returns</h4>
+        <p>Hassle-free 10-day return & replacement policy.</p>
+      </li>
+      <li class="usp-item">
+        <div class="usp-icon" aria-hidden="true">🎁</div>
+        <h4>Amazon Prime</h4>
+        <p>Unlimited free delivery + exclusive deals for Prime members.</p>
+      </li>
+    </ul>
+  </section>
+
+  <!-- =============================================
+       NEWSLETTER SECTION
+  =============================================== -->
+  <section class="newsletter" aria-label="Subscribe to newsletter">
+    <div class="newsletter-inner">
+      <div class="nl-text">
+        <h2>Stay Updated with <span class="accent" style="color:#FF9900;">Amazon</span></h2>
+        <p>Get the best deals, new launches and exclusive offers straight to your inbox.</p>
+      </div>
+      <form class="nl-form" id="newsletterForm" novalidate>
+        <label for="nlEmail" class="sr-only">Your email address</label>
+        <input
+          type="email"
+          id="nlEmail"
+          class="nl-input"
+          placeholder="Enter your email"
+          aria-required="true"
+        />
+        <button type="submit" class="btn btn-primary" style="background:#FF9900;color:#111;border-radius:0;">
+          Subscribe
+        </button>
+      </form>
+      <p class="nl-msg" id="nlMsg" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- =============================================
+       BACK TO TOP BAR — Amazon style
+  =============================================== -->
+  <div class="back-to-top">
+    <a href="#">Back to top</a>
+  </div>
+
+  <!-- =============================================
+       FOOTER — Amazon style
+  =============================================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-grid">
+
+      <!-- Column 1: Get to Know Us -->
+      <div class="footer-col footer-brand">
+        <a href="#" class="logo footer-logo">
+          <span class="logo-mark">a</span>mazon
+        </a>
+        <p>Amazon.in is India's largest online shopping platform, delivering smiles across the country since 2013.</p>
+        <div class="social-links" aria-label="Social media">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" stroke="currentColor" stroke-width="2" fill="none"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2: Get to Know Us -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Get to Know Us</h4>
+        <ul role="list">
+          <li><a href="#">About Amazon</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Press Releases</a></li>
+          <li><a href="#">Amazon Science</a></li>
+          <li><a href="#">Sustainability</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Make Money with Us -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Make Money with Us</h4>
+        <ul role="list">
+          <li><a href="#">Sell on Amazon</a></li>
+          <li><a href="#">Amazon Associates</a></li>
+          <li><a href="#">Fulfillment by Amazon</a></li>
+          <li><a href="#">Advertise Your Products</a></li>
+          <li><a href="#">Self-Publish with Us</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Let Us Help You -->
+      <div class="footer-col">
+        <h4 class="footer-heading">Let Us Help You</h4>
+        <ul role="list">
+          <li><a href="#">COVID-19 & Amazon</a></li>
+          <li><a href="#">Your Account</a></li>
+          <li><a href="#">Returns Centre</a></li>
+          <li><a href="#">100% Purchase Protection</a></li>
+          <li><a href="#">Help</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <!-- Amazon legal links row -->
+    <div class="footer-legal-links">
+      <a href="#">Conditions of Use & Sale</a>
+      <a href="#">Privacy Notice</a>
+      <a href="#">Interest-Based Ads</a>
+      <a href="#">© 2026, Amazon.com, Inc. or its affiliates</a>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="footer-bottom">
+      <p class="copyright">© 2026 Amazon.in — All rights reserved.</p>
+      <div class="payment-icons" aria-label="Accepted payment methods">
+        <span class="pay-badge">UPI</span>
+        <span class="pay-badge">Visa</span>
+        <span class="pay-badge">Mastercard</span>
+        <span class="pay-badge">Net Banking</span>
+        <span class="pay-badge">EMI</span>
+        <span class="pay-badge">Amazon Pay</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true">
+    ✓ Added to cart!
+  </div>
+
+  <!-- External JavaScript (same script.js works!) -->
+  <script src="script.js"></script>
+
+</body>
+</html>
